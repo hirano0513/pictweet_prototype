@@ -1,0 +1,10 @@
+<div class="contents row">
+  <%= form_with(model: Tweet,local: true ) do |f|%>
+    <h3 id="edit-title">
+      編集する
+    </h3>
+    <%= f.file_field :image %>
+    <%= f.text_area :text, placeholder: "text", value: @tweet.text, size: "30x10" %>
+    <%= f.submit "はなす" %>
+  <% end %>
+</div>

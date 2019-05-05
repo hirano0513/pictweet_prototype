@@ -1,0 +1,20 @@
+<ul　id="tweet_menu_wrapper">
+<li class="tweet_menu">
+  <%= link_to "詳細", tweet_path(tweet.id), method: :get %>
+</li>
+<% if user_signed_in? && current_user.id == tweet.user_id %>
+  <li class="tweet_menu">
+    <%= link_to '編集', "/tweets/#{tweet.id}/edit", method: :get %>
+  </li>
+  <li class="tweet_menu">
+    <%= link_to '削除', "/tweets/#{tweet.id}", method: :delete %>
+  </li>
+<% end %>
+</ul>
+<div class="content_post"> <%= image_tag tweet.image.variant(resize:'50x50').processed, class: "content-img" %></div>
+  <div class="tweet-text">
+    <a href="/users/<%= tweet.user_id %>">
+      <div><span>投稿者</span><%= tweet.user.nickname %>:</div>
+    </a>
+    <span id="main-text"><%= simple_format(tweet.text) %></span>
+  </div>

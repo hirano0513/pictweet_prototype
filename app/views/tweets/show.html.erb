@@ -1,0 +1,39 @@
+<div class ="contents row">
+<ul>
+<% if user_signed_in? && current_user.id == @tweet.user_id %>
+  <li class="tweet_menu">
+    <%= link_to '編集', "/tweets/#{@tweet.id}/edit", method: :get %>
+  </li>
+  <li class="tweet_menu">
+    <%= link_to '削除', "/tweets/#{@tweet.id}", method: :delete %>
+  </li>
+<% end %>
+</ul>
+<div class="content_post"> <%= image_tag @tweet.image.variant(resize:'50x50').processed, class: "content-img" %></div>
+
+    <div class="tweet-text">
+    <a href="/users/<%= @tweet.user_id %>">
+    <div><span>投稿者</span><%= @tweet.user.nickname %>:</div>
+    </a>
+    <span id="main-text"><%= simple_format(@tweet.text) %></span>
+  </div>
+    <div class="container">
+    <% if current_user %>
+      <%= form_with model: [Comment], url: tweet_comments_path(@tweet), local: true do |f| %>
+        <%= f.text_area :text, placeholder: "コメント", size: "30x2" %>
+        <input type="submit" value="はなす">
+      <% end %>
+    <% end %>
+   <div class="comments">
+      <h4 id="show-comment-title">＜コメント一覧＞</h4>
+      <% if @comments %>
+        <% @comments.each do |comment| %>
+          <p id="show-comment">
+            <strong><%= link_to comment.user.nickname, "/users/#{comment.user_id}" %>：</strong>
+            <%= comment.text %>
+          </p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
